@@ -20,7 +20,10 @@ def FixedPointIteration(alpha, beta, eps):
     while (True):
         iter += 1
         curX = np.dot(alpha, prevX) + beta
-        curEps = norm * (1 - norm) * np.linalg.norm(curX - prevX)
+        if norm < 1:
+            curEps = norm / (1 - norm) * np.linalg.norm(curX - prevX)
+        else:
+            curEps = np.linalg.norm(curX - prevX)
         prevX = curX
         if (curEps < eps):
             break
@@ -56,8 +59,21 @@ b = np.array(list(map(int, input().split(" "))), dtype=float)
 
 eps = float(input())
 
+print("Метод простых итераций:")
+alpha, beta = buildMatrixAlphaAndBeta(A, b)
+x, iter = FixedPointIteration(alpha, beta, eps)
+
+print("Число итераций: ", iter)
+print("Решение системы: ", x)
+print()
+
+
+print("Метод Зейделя:")
 x, iter = Seidel(A, b, eps)
 
 print("Число итераций: ", iter)
 print("Решение системы: ", x)
+print()
+
+
 print("Проверка решения: ", np.linalg.solve(A, b))
