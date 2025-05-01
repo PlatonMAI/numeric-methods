@@ -44,7 +44,7 @@ def getDeltaY(x: float, y: np.ndarray, h):
     if debug: print(f"\tdeltaY = {sum_}")
     return sum_
 
-def RungeKutta(xs: list, a: float, b: float, y0: np.ndarray, h):
+def RungeKutta(xs: list, y0: np.ndarray, h):
     N = len(xs) - 1
     dim = y0.shape[0]
     ys = np.empty((N + 1, dim))
@@ -120,7 +120,7 @@ h = 0.1
 
 xs = splitting(a, b, h)
 ysEuler = Euler(xs, y0, h)
-ysRungeKutta = RungeKutta(xs, a, b, y0, h)
+ysRungeKutta = RungeKutta(xs, y0, h)
 ysAdams = Adams(xs, ysRungeKutta, h)
 
 print(f"Шаг: {h}")
@@ -144,7 +144,7 @@ h2 = h / 2
 
 xs2 = splitting(a, b, h2)
 ysEuler2 = Euler(xs2, y0, h2)
-ysRungeKutta2 = RungeKutta(xs2, a, b, y0, h2)
+ysRungeKutta2 = RungeKutta(xs2, y0, h2)
 ysAdams2 = Adams(xs2, ysRungeKutta2, h2)
 
 print("===================================================================")
